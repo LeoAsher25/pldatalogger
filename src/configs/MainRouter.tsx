@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "src/components/layout/MainLayout";
+import AuthGuard from "src/guards/AuthGuard";
 import Dashboard from "src/pages/Dashboard";
 import HomePage from "src/pages/HomePage";
 import Login from "src/pages/Login";
@@ -12,7 +13,11 @@ const mainRouter = createBrowserRouter([
   },
   {
     path: ERoutePath.HOME_PAGE,
-    element: <MainLayout />,
+    element: (
+      <AuthGuard>
+        <MainLayout />
+      </AuthGuard>
+    ),
     children: [
       {
         path: ERoutePath.HOME_PAGE,

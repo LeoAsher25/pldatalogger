@@ -10,7 +10,11 @@ import { IconButton, InputAdornment, Stack } from "@mui/material";
 // components
 import { RHFCheckbox } from "src/components/hook-form/RHFCheckbox";
 import RHFTextField from "src/components/hook-form/RHFTextField";
-import { mockLoginApi } from "src/utils/mookApi";
+import { useAppDispatch } from "src/hooks/customReduxHook";
+import {
+  getProfileMethod,
+  loginMethod,
+} from "src/stores/auth/authThunkActions";
 import Iconify from "../Iconify";
 
 const defaultValues: SystemTypes.ILoginFormData = {
@@ -28,7 +32,7 @@ const LoginSchema = Yup.object().shape({
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
-
+  const dispatch = useAppDispatch();
   const methods = useForm<SystemTypes.ILoginFormData>({
     resolver: yupResolver(LoginSchema),
     defaultValues,
@@ -42,7 +46,8 @@ export default function LoginForm() {
 
   const onSubmit = async (data: SystemTypes.ILoginFormData) => {
     try {
-      const response = await mockLoginApi(data);
+      const response = await dispatch(loginMethod(data));
+      await dispatch(getProfileMethod());
       console.log("response: ", response);
     } catch (error: any) {
       console.error(error);

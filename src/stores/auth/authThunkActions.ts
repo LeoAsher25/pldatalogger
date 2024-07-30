@@ -19,6 +19,7 @@ export const getProfileMethod = createAsyncThunk(
   async (_, thunkApi) => {
     try {
       const response = await mockGetProfileApi();
+      console.log("mockGetProfileApi: ", response);
       return response;
     } catch (err) {
       return thunkApi.rejectWithValue(err);
