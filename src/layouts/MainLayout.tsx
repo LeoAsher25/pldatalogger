@@ -6,7 +6,6 @@ import {
 import {
   AppBar,
   CssBaseline,
-  Divider,
   Drawer,
   Hidden,
   IconButton,
@@ -21,8 +20,11 @@ import { Outlet } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import Navigation from "src/components/Navigation/Navigation";
 import AvatarPopup from "src/components/header/AvatarPopup";
+import { useAppSelector } from "src/hooks/customReduxHook";
+import { RootState } from "src/stores/rootReducer";
+import Page from "src/components/Page";
 
-const drawerWidth = 210;
+const drawerWidth = 250;
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -48,6 +50,10 @@ const useStyles = makeStyles((theme: Theme) => ({
         duration: theme.transitions.duration.leavingScreen,
       }),
     },
+    boxShadow: "none",
+    border: "0",
+    borderBottom: "1px solid #0001 !important",
+    backgroundColor: "white",
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -108,7 +114,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   appBarTitle: {
     flex: 1,
-    fontWeight: 200,
+    fontWeight: 600,
     color: theme.palette.text.primary,
   },
   contentShift: {
@@ -161,6 +167,9 @@ interface MainLayoutProps {
 
 const MainLayout: React.FC<MainLayoutProps> = ({ navigationData }) => {
   const theme = useTheme();
+  const { pageTitle, breadcrumbs } = useAppSelector(
+    (state: RootState) => state.settingsState
+  );
   const [extended, setExtended] = React.useState<boolean>(true);
   const classes = useStyles(extended);
   const [mobileOpen, setMobileOpen] = React.useState<boolean>(false);
@@ -187,81 +196,92 @@ const MainLayout: React.FC<MainLayoutProps> = ({ navigationData }) => {
           <ChevronLeftIcon />
         </IconButton>
       </div>
-      <Divider />
+      {/* <Divider /> */}
       <Navigation data={navigationData} collapsed={!extended} />
-      <Divider />
+      {/* <Divider /> */}
     </Fragment>
   );
 
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBarShift, extended && classes.appBar)}>
-        <Toolbar className={classes.toolbar}>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="extend drawer"
-            onClick={handleExtendOpen}
-            className={clsx(
-              classes.extendButton,
-              extended && classes.extendButtonHidden
-            )}>
-            <ChevronRightIcon />
-          </IconButton>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            className={classes.menuButton}>
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap className={classes.appBarTitle}>
-            {/* Responsive Sidebar <strong>Starter Layout</strong> */}
-          </Typography>
+    <Page title={pageTitle}>
+      <div className={classes.root}>
+        <CssBaseline />
+        <AppBar
+          position="fixed"
+          className={clsx(classes.appBarShift, extended && classes.appBar)}>
+          <Toolbar className={classes.toolbar}>
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="extend drawer"
+              onClick={handleExtendOpen}
+              className={clsx(
+                classes.extendButton,
+                extended && classes.extendButtonHidden
+              )}>
+              <ChevronRightIcon />
+            </IconButton>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              className={classes.menuButton}>
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" noWrap className={classes.appBarTitle}>
+              {pageTitle}
+            </Typography>
 
-          <AvatarPopup />
-        </Toolbar>
-      </AppBar>
-      <Hidden smUp implementation="css">
-        <Drawer
-          variant="temporary"
-          anchor={"left"}
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          classes={{
-            paper: classes.drawerPaper,
-          }}
-          ModalProps={{
-            keepMounted: true,
-          }}>
-          {drawer}
-        </Drawer>
-      </Hidden>
-      <Hidden xsDown implementation="css">
-        <Drawer
-          variant="permanent"
-          classes={{
-            paper: clsx(
-              classes.drawerPaper,
-              !extended && classes.drawerPaperClose
-            ),
-          }}
-          open={extended}>
-          {drawer}
-        </Drawer>
-      </Hidden>
-      <main
-        className={clsx(classes.contentShift, extended ? classes.content : {})}>
-        <div className={classes.toolbar} />
-        <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-          <Outlet />
-        </div>
-      </main>
-    </div>
+            <AvatarPopup />
+          </Toolbar>
+        </AppBar>
+        <Hidden smUp implementation="css">
+          <Drawer
+            variant="temporary"
+            anchor={"left"}
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+            ModalProps={{
+              keepMounted: true,
+            }}>
+            {drawer}
+          </Drawer>
+        </Hidden>
+        <Hidden xsDown implementation="css">
+          <Drawer
+            variant="permanent"
+            classes={{
+              paper: clsx(
+                classes.drawerPaper,
+                !extended && classes.drawerPaperClose
+              ),
+            }}
+            open={extended}>
+            {drawer}
+          </Drawer>
+        </Hidden>
+        <main
+          className={clsx(
+            classes.contentShift,
+            extended ? classes.content : {}
+          )}>
+          <div className={classes.toolbar} />
+          <div
+            style={{
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+              padding: "24px 32px",
+            }}>
+            <Outlet />
+          </div>
+        </main>
+      </div>
+    </Page>
   );
 };
 

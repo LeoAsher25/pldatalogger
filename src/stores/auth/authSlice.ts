@@ -7,13 +7,13 @@ import {
 } from "src/utils/localStorage";
 import { getProfileMethod, loginMethod } from "./authThunkActions";
 
-interface IInitialState {
+interface IInitialAuthState {
   accessToken: string;
   refreshToken: string;
   currentUser: UserTypes.IProfile | null;
 }
 
-const initialState: IInitialState = {
+const initialState: IInitialAuthState = {
   accessToken: getLocalStorage("accessToken"),
   refreshToken: getLocalStorage("refreshToken"),
   currentUser: getLocalStorage("currentUser"),

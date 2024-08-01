@@ -1,5 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 declare namespace SystemTypes {
+  enum DataStatus {
+    MEASURING,
+  }
+
   interface ILoginFormData {
     email: string;
     password: string;
@@ -9,6 +13,54 @@ declare namespace SystemTypes {
   interface ILoginResponse {
     accessToken: string;
     refreshToken: string;
+  }
+
+  interface ISensorData {
+    status: DataStatus;
+    alert: boolean;
+    alertEarly: boolean;
+    name: string;
+    time: Date | number | string;
+    unit: string;
+    value: string;
+  }
+
+  interface IRealtimeData {
+    alert: boolean;
+    alertEarly: boolean;
+    enabled: boolean;
+    id: number;
+    name: string;
+    precision: number;
+    status: number;
+    time: number;
+    unit: string;
+    value: string;
+  }
+
+  interface ISampleData {
+    address: string;
+    autorun: boolean;
+    connected: boolean;
+    connectionId: number;
+    currentDistributor: number;
+    database: string;
+    enabled: boolean;
+    filled: number;
+    method: number;
+    model: number;
+    name: string;
+    nextDistributor: number;
+    password: string;
+    port: number;
+    protocol: number;
+    remoted: boolean;
+    tag: string;
+    temperatureInside: number;
+    temperatureOutside: number;
+    times: number;
+    total: number;
+    username: string;
   }
 }
 
@@ -38,39 +90,8 @@ declare namespace SystemUI {
     collapsed: boolean;
   }
 
-  // Define types for navigation items
-  // interface NavItem {
-  //   title: string;
-  //   path: string;
-  //   icon?: React.ReactNode;
-  //   children?: NavItem[];
-  //   // info?: React.ReactNode;
-  // }
-
-  // interface NavGroup {
-  //   subheader: string;
-  //   items: NavItem[];
-  // }
-
-  // interface NavItemProps {
-  //   item: NavItem;
-  //   active?: boolean;
-  //   open?: boolean;
-  //   onMouseEnter?: () => void;
-  //   onMouseLeave?: () => void;
-  // }
-
-  // interface NavItemContentProps {
-  //   icon?: React.ReactNode;
-  //   title: string;
-  //   children?: NavItem[];
-  //   subItem?: boolean;
-  // }
-
-  // // Define the component props type
-  // interface NavSectionVerticalProps {
-  //   navConfig: NavGroup[];
-  //   isCollapse?: boolean;
-  //   [key: string]: any; // For additional props
-  // }
+  interface BreadcrumbItem {
+    title: string;
+    path: string;
+  }
 }
