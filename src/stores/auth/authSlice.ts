@@ -16,7 +16,7 @@ interface IInitialState {
 const initialState: IInitialState = {
   accessToken: getLocalStorage("accessToken"),
   refreshToken: getLocalStorage("refreshToken"),
-  currentUser: null,
+  currentUser: getLocalStorage("currentUser"),
 };
 
 const authSlice = createSlice({
@@ -49,6 +49,7 @@ const authSlice = createSlice({
       state.currentUser = {
         ...payload,
       };
+      setLocalStorage("currentUser", state.currentUser);
     });
   },
 });

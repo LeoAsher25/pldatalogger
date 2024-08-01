@@ -14,18 +14,10 @@ export default function AuthGuard({ children }: any) {
     null
   );
 
-  console.log("requestedLocation: ", currentUser, requestedLocation, pathname);
-
   if (!currentUser) {
     if (pathname !== requestedLocation) {
       setRequestedLocation(pathname);
     }
-    console.log(
-      "requestedLocation: 1",
-      currentUser,
-      requestedLocation,
-      pathname
-    );
     return <Login />;
   }
 

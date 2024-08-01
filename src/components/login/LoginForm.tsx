@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as Yup from "yup";
 // form
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -8,13 +8,16 @@ import { LoadingButton } from "@mui/lab";
 import { IconButton, InputAdornment, Stack } from "@mui/material";
 
 // components
+import { Navigate, useNavigate } from "react-router";
 import { RHFCheckbox } from "src/components/hook-form/RHFCheckbox";
 import RHFTextField from "src/components/hook-form/RHFTextField";
-import { useAppDispatch } from "src/hooks/customReduxHook";
+import { useAppDispatch, useAppSelector } from "src/hooks/customReduxHook";
 import {
   getProfileMethod,
   loginMethod,
 } from "src/stores/auth/authThunkActions";
+import { RootState } from "src/stores/rootReducer";
+import ERoutePath from "src/types/routes.enum";
 import Iconify from "../Iconify";
 
 const defaultValues: SystemTypes.ILoginFormData = {
@@ -32,6 +35,10 @@ const LoginSchema = Yup.object().shape({
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
+  const { currentUser } = useAppSelector((state: RootState) => state.authState);
+
+  const navigate = useNavigate();
+
   const dispatch = useAppDispatch();
   const methods = useForm<SystemTypes.ILoginFormData>({
     resolver: yupResolver(LoginSchema),
@@ -48,12 +55,17 @@ export default function LoginForm() {
     try {
       const response = await dispatch(loginMethod(data));
       await dispatch(getProfileMethod());
-      console.log("response: ", response);
     } catch (error: any) {
       console.error(error);
       reset();
     }
   };
+
+  useEffect(() => {
+    if (currentUser) {
+      navigate(ERoutePath.HOME_PAGE);
+    }
+  }, [currentUser, navigate]);
 
   return (
     <FormProvider {...methods}>

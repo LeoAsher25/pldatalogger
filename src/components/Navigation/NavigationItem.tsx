@@ -1,0 +1,146 @@
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import {
+  Box,
+  Collapse,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  lighten,
+} from "@mui/material";
+import clsx from "clsx";
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
+// import { makeStyles } from "@mui/material/styles";
+import { Theme } from "@material-ui/core";
+import { makeStyles } from "@mui/styles";
+
+const useStyles: any = makeStyles((theme: Theme) => ({
+  root: {
+    width: "95%",
+    margin: "4px auto",
+    borderRadius: "8px",
+    transition: "all .5s",
+    overflow: "hidden",
+  },
+  listItem: {
+    transition: "all .5s",
+    display: "flex",
+    flexDirection: "column",
+  },
+  listLink: {
+    padding: "0 15px",
+    textDecoration: "none",
+    color: "inherit",
+    transition: "all .5s",
+    display: "flex",
+    alignItems: "center",
+    width: "100%",
+  },
+  listLinkCollapsed: {
+    [theme.breakpoints.up("sm")]: {
+      width: theme.spacing(7),
+      flexDirection: "column",
+      justifyContent: "center",
+    },
+  },
+  listIcon: {
+    color: "inherit",
+    justifyContent: "center",
+  },
+  listItemText: {
+    [theme.breakpoints.up("sm")]: {
+      fontSize: 9,
+    },
+  },
+  expanded: {
+    backgroundColor: lighten(theme.palette.secondary.main, 0.1),
+  },
+  selectedBg: {
+    backgroundColor: lighten(theme.palette.success.light, 0.8),
+  },
+
+  selectedText: {
+    color: theme.palette.success.main,
+    fontWeight: "500 !important",
+    transition: "0.3s",
+
+    "& > span": {
+      color: theme.palette.success.main,
+      fontWeight: "500 !important",
+      transition: "0.3s",
+    },
+  },
+}));
+
+const NavigationItem = ({ item, collapsed }: SystemUI.NavItemProps) => {
+  const { pathname } = useLocation();
+
+  const classes = useStyles();
+
+  const [open, setOpen] = React.useState(false);
+  const nested = Boolean(item.children);
+
+  const handleClick = () => {
+    setOpen(!open);
+  };
+
+  React.useEffect(() => {
+    if (pathname.includes(item.url)) {
+      setOpen(true);
+    }
+  }, [pathname, item.url]);
+
+  return (
+    <div
+      className={clsx(
+        classes.root,
+        nested && open && classes.expanded,
+        pathname.includes(item.url) && !nested && classes.selectedBg
+      )}>
+      <ListItem
+        button
+        className={clsx(classes.listItem)}
+        onClick={handleClick}
+        disableGutters>
+        <Box
+          component={!nested ? Link : "div"}
+          to={!nested ? `${item.url}` : undefined}
+          className={clsx(
+            classes.listLink,
+            collapsed && classes.listLinkCollapsed
+          )}>
+          <ListItemIcon className={classes.listIcon}>
+            {item.icon && (
+              <item.icon
+                className={
+                  pathname.includes(item.url) && !nested && classes.selectedText
+                }
+              />
+            )}
+          </ListItemIcon>
+          <ListItemText
+            className={clsx(
+              { primary: collapsed ? classes.listItemText : "" },
+              pathname.includes(item.url) && !nested && classes.selectedText
+            )}>
+            {item.name}
+          </ListItemText>
+          {nested && (open ? <ExpandLess /> : <ExpandMore />)}
+        </Box>
+      </ListItem>
+
+      {nested && (
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <List disablePadding>
+            {item.children!.map((nestedItem, i) => (
+              <NavigationItem key={i} item={nestedItem} collapsed={collapsed} />
+            ))}
+          </List>
+        </Collapse>
+      )}
+    </div>
+  );
+};
+
+export default NavigationItem;

@@ -18,5 +18,6 @@ export async function mockGetProfileApi(): Promise<UserTypes.IProfile> {
   return mockApi<UserTypes.IProfile>({
     email: "admin@gmail.com",
     fullName: "Adminitrator",
+    avatar: "https://cdn-icons-png.flaticon.com/512/6596/6596121.png",
   });
 }
