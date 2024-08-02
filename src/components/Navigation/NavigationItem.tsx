@@ -48,11 +48,6 @@ const useStyles: any = makeStyles((theme: Theme) => ({
     color: "inherit",
     justifyContent: "center",
   },
-  listItemText: {
-    [theme.breakpoints.up("sm")]: {
-      fontSize: 9,
-    },
-  },
   expanded: {
     backgroundColor: lighten(theme.palette.secondary.main, 0.1),
   },
@@ -121,9 +116,9 @@ const NavigationItem = ({ item, collapsed }: SystemUI.NavItemProps) => {
           </ListItemIcon>
           <ListItemText
             className={clsx(
-              { primary: collapsed ? classes.listItemText : "" },
               pathname.includes(item.url) && !nested && classes.selectedText
-            )}>
+            )}
+            style={{ display: collapsed ? "none" : "inline" }}>
             {item.name}
           </ListItemText>
           {nested && (open ? <ExpandLess /> : <ExpandMore />)}

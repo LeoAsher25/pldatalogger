@@ -12,43 +12,48 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { Theme, useTheme } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
 import clsx from "clsx";
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Outlet } from "react-router-dom";
 
 import { makeStyles } from "@mui/styles";
 import Navigation from "src/components/Navigation/Navigation";
+import Page from "src/components/Page";
 import AvatarPopup from "src/components/header/AvatarPopup";
 import { useAppSelector } from "src/hooks/customReduxHook";
 import { RootState } from "src/stores/rootReducer";
-import Page from "src/components/Page";
-
 const drawerWidth = 250;
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles((theme: any) => ({
   root: {
     display: "flex",
     height: "100vh",
   },
   appBarShift: {
-    [theme.breakpoints.up("sm")]: {
-      zIndex: theme.zIndex.drawer + 2,
-      transition: theme.transitions.create(["width", "margin"], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
+    "&.MuiPaper-root": {
+      [theme.breakpoints.up("sm")]: {
+        zIndex: theme.zIndex.drawer + 2,
+        transition: theme.transitions.create(["width", "margin"], {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.leavingScreen,
+        }),
+      },
     },
   },
   appBar: {
-    [theme.breakpoints.up("sm")]: {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth,
-      zIndex: theme.zIndex.drawer + 2,
-      transition: theme.transitions.create(["width", "margin"], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
+    "&.MuiPaper-root": {
+      backgroundColor: "transparent",
+      boxShadow: "none",
+      [theme.breakpoints.up("sm")]: {
+        width: `calc(100% - ${drawerWidth}px)`,
+        marginLeft: drawerWidth,
+        zIndex: theme.zIndex.drawer + 2,
+        transition: theme.transitions.create(["width", "margin"], {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.leavingScreen,
+        }),
+      },
     },
     boxShadow: "none",
     border: "0",
@@ -57,6 +62,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   menuButton: {
     marginRight: theme.spacing(2),
+    color: theme.palette.text.primary + " !important",
     [theme.breakpoints.up("sm")]: {
       display: "none",
     },
@@ -68,20 +74,26 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   extendButton: {
-    color: theme.palette.text.primary,
-    marginRight: 36,
-    [theme.breakpoints.down("xs")]: {
-      display: "none",
+    "&.MuiButtonBase-root": {
+      color: theme.palette.text.primary,
+      marginRight: 36,
+      [theme.breakpoints.down("xs")]: {
+        display: "none",
+      },
     },
   },
   extendButtonHidden: {
-    display: "none",
+    "&.MuiButtonBase-root": {
+      display: "none",
+    },
   },
   toolbar: {
-    padding: "8px 24px",
-    height: 80,
-    backgroundColor: "white",
-    ...theme.mixins.toolbar,
+    "&.MuiToolbar-root": {
+      padding: "8px 24px",
+      height: 80,
+      backgroundColor: "white",
+      ...theme.mixins.toolbar,
+    },
   },
   toolbarIcon: {
     display: "flex",
@@ -92,24 +104,31 @@ const useStyles = makeStyles((theme: Theme) => ({
     ...theme.mixins.toolbar,
   },
   drawerPaper: {
-    width: drawerWidth,
-    display: "flex",
-    position: "fixed",
-    height: "100vh",
-    whiteSpace: "nowrap",
-    transition: theme.transitions.create(["width"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
+    "&[class*='makeStyles-drawerPaper']": {
+      width: drawerWidth,
+      display: "flex",
+      position: "fixed",
+      height: "100vh",
+      whiteSpace: "nowrap",
+      transition: theme.transitions.create(["width"], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+
+      // color: theme.palette.type === "light" && theme.palette.grey[100],
+      // backgroundColor: theme.palette.secondary.main,
+    },
   },
   drawerPaperClose: {
-    [theme.breakpoints.up("sm")]: {
-      overflowX: "hidden",
-      transition: theme.transitions.create("width", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-      width: theme.spacing(7),
+    "&[class*='makeStyles-drawerPaperClose']": {
+      [theme.breakpoints.up("sm")]: {
+        overflowX: "hidden",
+        transition: theme.transitions.create("width", {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.leavingScreen,
+        }),
+        width: theme.spacing(7),
+      },
     },
   },
   appBarTitle: {
@@ -124,7 +143,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     flexDirection: "column",
     [theme.breakpoints.up("sm")]: {
       marginLeft: theme.spacing(7),
-      zIndex: theme.zIndex.drawer + 1,
       transition: theme.transitions.create(["width", "margin"], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
@@ -135,7 +153,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     [theme.breakpoints.up("sm")]: {
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
-      zIndex: theme.zIndex.drawer + 1,
       transition: theme.transitions.create(["width", "margin"], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
@@ -148,17 +165,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: "center",
     padding: theme.spacing(2),
   },
-  copyrightText: {
-    fontSize: 11,
-    transition: "all .3s",
-    [theme.breakpoints.up("sm")]: {
-      opacity: (extend: boolean) => (extend ? 1 : 0),
-    },
-    display: "flex",
-    alignItems: "center",
-    textDecoration: "none",
-    color: "inherit",
-  },
 }));
 
 interface MainLayoutProps {
@@ -167,12 +173,12 @@ interface MainLayoutProps {
 
 const MainLayout: React.FC<MainLayoutProps> = ({ navigationData }) => {
   const theme = useTheme();
-  const { pageTitle, breadcrumbs } = useAppSelector(
+  const { pageTitle } = useAppSelector(
     (state: RootState) => state.settingsState
   );
-  const [extended, setExtended] = React.useState<boolean>(true);
+  const [extended, setExtended] = useState<boolean>(true);
   const classes = useStyles(extended);
-  const [mobileOpen, setMobileOpen] = React.useState<boolean>(false);
+  const [mobileOpen, setMobileOpen] = useState<boolean>(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -196,9 +202,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ navigationData }) => {
           <ChevronLeftIcon />
         </IconButton>
       </div>
-      {/* <Divider /> */}
       <Navigation data={navigationData} collapsed={!extended} />
-      {/* <Divider /> */}
     </Fragment>
   );
 
@@ -207,7 +211,6 @@ const MainLayout: React.FC<MainLayoutProps> = ({ navigationData }) => {
       <div className={classes.root}>
         <CssBaseline />
         <AppBar
-          position="fixed"
           className={clsx(classes.appBarShift, extended && classes.appBar)}>
           <Toolbar className={classes.toolbar}>
             <IconButton
@@ -269,12 +272,12 @@ const MainLayout: React.FC<MainLayoutProps> = ({ navigationData }) => {
             classes.contentShift,
             extended ? classes.content : {}
           )}>
-          <div className={classes.toolbar} />
+          <Toolbar className={classes.toolbar} />
           <div
             style={{
-              flex: 1,
-              display: "flex",
-              flexDirection: "column",
+              // flex: 1,
+              // display: "flex",
+              // flexDirection: "column",
               padding: "24px 32px",
             }}>
             <Outlet />

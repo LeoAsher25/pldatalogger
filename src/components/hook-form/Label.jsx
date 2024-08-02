@@ -92,8 +92,7 @@ export default function Label({
         variant,
       }}
       {...other}>
-      {" "}
-      {children}{" "}
+      {children}
     </RootStyle>
   );
 }
