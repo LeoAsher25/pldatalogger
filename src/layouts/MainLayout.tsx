@@ -192,19 +192,24 @@ const MainLayout: React.FC<MainLayoutProps> = ({ navigationData }) => {
     setExtended(false);
   };
 
-  const drawer = (
-    <Fragment>
-      <div className={classes.toolbarIcon}>
-        <img width={46} src="images/logo.png" alt="logo" />
-        <IconButton
-          onClick={handleExtendClose}
-          className={classes.collapseButton}>
-          <ChevronLeftIcon />
-        </IconButton>
-      </div>
-      <Navigation data={navigationData} collapsed={!extended} />
-    </Fragment>
-  );
+  const renderDrawer = (isHidden: boolean) => {
+    return (
+      <Fragment>
+        <div className={classes.toolbarIcon}>
+          <img width={46} src="images/logo.png" alt="logo" />
+          <IconButton
+            onClick={handleExtendClose}
+            className={classes.collapseButton}>
+            <ChevronLeftIcon />
+          </IconButton>
+        </div>
+        <Navigation
+          data={navigationData}
+          collapsed={isHidden ? false : !extended}
+        />
+      </Fragment>
+    );
+  };
 
   return (
     <Page title={pageTitle}>
@@ -251,7 +256,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ navigationData }) => {
             ModalProps={{
               keepMounted: true,
             }}>
-            {drawer}
+            {renderDrawer(true)}
           </Drawer>
         </Hidden>
         <Hidden xsDown implementation="css">
@@ -264,7 +269,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ navigationData }) => {
               ),
             }}
             open={extended}>
-            {drawer}
+            {renderDrawer(false)}
           </Drawer>
         </Hidden>
         <main
@@ -275,9 +280,6 @@ const MainLayout: React.FC<MainLayoutProps> = ({ navigationData }) => {
           <Toolbar className={classes.toolbar} />
           <div
             style={{
-              // flex: 1,
-              // display: "flex",
-              // flexDirection: "column",
               padding: "24px 32px",
             }}>
             <Outlet />
