@@ -37,8 +37,8 @@ import { DateRange } from "@mui/icons-material";
 import vi from "date-fns/esm/locale/vi";
 import FtpHistoryTableRow from "src/components/ftpHistory/FtpHistoryTableRow";
 import { HEADER } from "src/configs/config";
-import useTable from "src/hooks/useTable";
 import historyData from "src/data/historyData";
+import useTable from "src/hooks/useTable";
 
 // ----------------------------------------------------------------------
 
@@ -240,7 +240,6 @@ export default function FtpHistoryPage() {
                   textDecoration: "none",
                   color: "white",
                   width: "100%",
-                  height: "100%",
                   padding: "11px 16px 8px 16px",
                 }}
                 separator=","

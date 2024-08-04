@@ -280,4 +280,74 @@ declare namespace SystemUI {
     title: string;
     path: string;
   }
+
+  // test new
+
+  interface TestNavItem {
+    title: string;
+    path: string;
+    icon?: React.ReactNode;
+    info?: React.ReactNode;
+    children?: TestNavItem[];
+  }
+
+  // Type for NavSectionVertical component
+  interface TestNavSectionVerticalProps {
+    isCollapse?: boolean;
+    navConfig: TestNavGroup[];
+    other?: React.ReactNode; // Additional props that might be passed
+  }
+
+  // Type for a group of navigation items
+  interface TestNavGroup {
+    subheader: string;
+    items: TestNavItem[];
+  }
+
+  // Type for NavListRoot component
+  interface TestNavListRootProps {
+    list: TestNavItem;
+    isCollapse?: boolean;
+  }
+
+  // Type for NavListSub component
+  interface TestNavListSubProps {
+    list: TestNavItem;
+  }
+
+  // Type for TestNavItem component
+  interface TestNavItemRootProps {
+    item: TestNavItem;
+    isCollapse?: boolean;
+    open?: boolean;
+    active?: boolean;
+    onOpen?: () => void;
+  }
+
+  // Type for TestNavItem component
+  interface TestNavItemSubProps {
+    item: TestNavItem;
+    open?: boolean;
+    active?: boolean;
+    onOpen?: () => void;
+  }
+
+  // Type for ListItemStyle props (styled component)
+  interface TestListItemStyleProps {
+    activeRoot?: boolean;
+    activeSub?: boolean;
+    subItem?: boolean;
+    sx?: any; // MUI's style system prop for styling
+  }
+
+  // Type for ListItemTextStyle props (styled component)
+  interface TestListItemTextStyleProps {
+    isCollapse?: boolean;
+    sx?: any; // MUI's style system prop for styling
+  }
+
+  // Type for ListItemIconStyle props (styled component)
+  interface TestListItemIconStyleProps {
+    sx?: any; // MUI's style system prop for styling
+  }
 }

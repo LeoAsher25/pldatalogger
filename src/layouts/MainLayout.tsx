@@ -23,8 +23,8 @@ import Page from "src/components/Page";
 import AvatarPopup from "src/components/header/AvatarPopup";
 import { useAppSelector } from "src/hooks/customReduxHook";
 import { RootState } from "src/stores/rootReducer";
-const drawerWidth = 250;
 
+const drawerWidth = 280;
 const useStyles = makeStyles((theme: any) => ({
   root: {
     display: "flex",

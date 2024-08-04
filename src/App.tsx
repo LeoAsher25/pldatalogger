@@ -6,6 +6,7 @@ import MultiChartsPage from "src/pages/MultiChartsPage";
 import RealtimeDataPage from "src/pages/RealtimeDataPage";
 import Sample from "src/pages/Sample";
 import SersorDataPage from "src/pages/SersorDataPage";
+import ComingSoon from "./components/ComingSoon";
 import { mainNavigation } from "./data";
 import AuthGuard from "./guards/AuthGuard";
 import MainLayout from "./layouts/MainLayout";
@@ -41,6 +42,34 @@ const App = () => {
               <Route path={ERoutePath.CHART} element={<MultiChartsPage />} />
               <Route path={ERoutePath.TABLE} element={<FtpHistoryPage />} />
               <Route path={ERoutePath.SAMPLE} element={<Sample />} />
+
+              <Route
+                path={ERoutePath.CONFIGURATION_SENSORS}
+                element={<ComingSoon />}
+              />
+              <Route
+                path={ERoutePath.CONFIGURATION_CONNECTION}
+                element={<ComingSoon />}
+              />
+              <Route
+                path={ERoutePath.CONFIGURATION_TRANSFER}
+                element={<ComingSoon />}
+              />
+              <Route
+                path={ERoutePath.CONFIGURATION_SAMPLER}
+                element={<ComingSoon />}
+              />
+
+              <Route
+                path={ERoutePath.DEVICE_GENERAL}
+                element={<ComingSoon />}
+              />
+              <Route
+                path={ERoutePath.DEVICE_NETWORK}
+                element={<ComingSoon />}
+              />
+              <Route path={ERoutePath.DEVICE_TIME} element={<ComingSoon />} />
+              <Route path={ERoutePath.DEVICE_OTA} element={<ComingSoon />} />
             </Route>
           </Routes>
         </ThemeProvider>

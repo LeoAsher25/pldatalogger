@@ -1,5 +1,5 @@
 // @mui
-import { Box, Container, Stack, Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 import Page from "./Page";
@@ -41,7 +41,7 @@ export default function ComingSoon() {
             </Typography>
             <img
               style={{ maxWidth: "100%" }}
-              src="images/comingsoon.png"
+              src="/images/comingsoon.png"
               alt="comming soon"
             />
           </Box>

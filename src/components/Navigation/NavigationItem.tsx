@@ -22,11 +22,19 @@ const useStyles: any = makeStyles((theme: Theme) => ({
     borderRadius: "8px",
     transition: "all .5s",
     overflow: "hidden",
+    backgroundColor: "white",
+
+    "& .MuiCollapse-wrapper [class*=makeStyles-listLink]": {
+      padding: "0 20px 0 10px !important",
+    },
   },
   listItem: {
     transition: "all .5s",
     display: "flex",
     flexDirection: "column",
+    padding: "0 !important",
+    height: "48px",
+    lineHeight: "48px",
   },
   listLink: {
     padding: "0 15px",
@@ -36,6 +44,7 @@ const useStyles: any = makeStyles((theme: Theme) => ({
     display: "flex",
     alignItems: "center",
     width: "100%",
+    height: "100%",
   },
   listLinkCollapsed: {
     [theme.breakpoints.up("sm")]: {
@@ -49,7 +58,7 @@ const useStyles: any = makeStyles((theme: Theme) => ({
     justifyContent: "center",
   },
   expanded: {
-    backgroundColor: lighten(theme.palette.secondary.main, 0.1),
+    // backgroundColor: lighten(theme.palette.secondary.main, 0.1),
   },
   selectedBg: {
     backgroundColor: lighten(theme.palette.success.light, 0.8),
