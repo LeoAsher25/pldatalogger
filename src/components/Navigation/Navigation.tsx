@@ -2,6 +2,7 @@ import { List, Theme } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import React from "react";
 import NavigationItem from "./NavigationItem";
+import { SystemUI } from "src/types";
 
 const useStyles = makeStyles((theme: Theme) => ({
   list: {

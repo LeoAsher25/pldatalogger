@@ -7,6 +7,7 @@ import {
   Settings,
   TableChart,
 } from "@mui/icons-material";
+import { SystemUI } from "src/types";
 import ERoutePath from "src/types/routes.enum";
 
 export const mainNavigation: SystemUI.NavItem[] = [
@@ -38,7 +39,7 @@ export const mainNavigation: SystemUI.NavItem[] = [
   {
     name: "Cấu hình",
     icon: Settings,
-    url: "",
+    url: ERoutePath.CONFIGURATION,
     children: [
       {
         name: "Cảm biến",
@@ -65,7 +66,7 @@ export const mainNavigation: SystemUI.NavItem[] = [
   {
     name: "Thiếu bị",
     icon: DeviceHub,
-    url: "",
+    url: ERoutePath.DEVICE,
     children: [
       {
         name: "Chung",

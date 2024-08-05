@@ -14,6 +14,7 @@ import { Link, useLocation } from "react-router-dom";
 // import { makeStyles } from "@mui/material/styles";
 import { Theme } from "@material-ui/core";
 import { makeStyles } from "@mui/styles";
+import { SystemUI } from "src/types";
 
 const useStyles: any = makeStyles((theme: Theme) => ({
   root: {
@@ -61,7 +62,7 @@ const useStyles: any = makeStyles((theme: Theme) => ({
     // backgroundColor: lighten(theme.palette.secondary.main, 0.1),
   },
   selectedBg: {
-    backgroundColor: lighten(theme.palette.success.light, 0.8),
+    backgroundColor: `${lighten(theme.palette.success.light, 0.8)} !important`,
   },
 
   selectedText: {
@@ -90,21 +91,28 @@ const NavigationItem = ({ item, collapsed }: SystemUI.NavItemProps) => {
   };
 
   React.useEffect(() => {
-    if (pathname.includes(item.url)) {
+    if (
+      pathname.includes(item.url) &&
+      item.children &&
+      item.children?.length > 0
+    ) {
       setOpen(true);
     }
-  }, [pathname, item.url]);
+  }, [pathname, item]);
 
   return (
     <div
       className={clsx(
         classes.root,
         nested && open && classes.expanded,
-        pathname.includes(item.url) && !nested && classes.selectedBg
+        pathname === item.url && !nested && classes.selectedBg
       )}>
       <ListItem
         button
-        className={clsx(classes.listItem)}
+        className={clsx(
+          classes.listItem,
+          pathname.includes(item.url) && nested && classes.selectedBg
+        )}
         onClick={handleClick}
         disableGutters>
         <Box
@@ -118,14 +126,18 @@ const NavigationItem = ({ item, collapsed }: SystemUI.NavItemProps) => {
             {item.icon && (
               <item.icon
                 className={
-                  pathname.includes(item.url) && !nested && classes.selectedText
+                  ((pathname === item.url && !nested) ||
+                    (pathname.includes(item.url) && nested)) &&
+                  classes.selectedText
                 }
               />
             )}
           </ListItemIcon>
           <ListItemText
             className={clsx(
-              pathname.includes(item.url) && !nested && classes.selectedText
+              ((pathname === item.url && !nested) ||
+                (pathname.includes(item.url) && nested)) &&
+                classes.selectedText
             )}
             style={{ display: collapsed ? "none" : "inline" }}>
             {item.name}

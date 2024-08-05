@@ -9,12 +9,14 @@ enum ERoutePath {
   SAMPLE = "/sample",
 
   // configuration
+  CONFIGURATION = "/configuration",
   CONFIGURATION_SENSORS = "/configuration/sensors",
   CONFIGURATION_CONNECTION = "/configuration/connections",
   CONFIGURATION_TRANSFER = "/configuration/transfer",
   CONFIGURATION_SAMPLER = "/configuration/sampler",
 
   // configuration
+  DEVICE = "/device",
   DEVICE_GENERAL = "/device/general",
   DEVICE_NETWORK = "/device/netwokr",
   DEVICE_TIME = "/device/time",

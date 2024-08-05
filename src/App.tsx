@@ -14,6 +14,8 @@ import FtpHistoryPage from "./pages/FtpHistoryPage";
 import Login from "./pages/Login";
 import ERoutePath from "./types/routes.enum";
 import { SensorsPage } from "./pages/configuration/SensorsPage";
+import SettingSamplerPage from "src/pages/configuration/SettingSamplerPage";
+import ConnectionsPage from "src/pages/configuration/ConnectionsPage";
 
 const App = () => {
   const appliedTheme = createTheme();
@@ -51,7 +53,7 @@ const App = () => {
               />
               <Route
                 path={ERoutePath.CONFIGURATION_CONNECTION}
-                element={<ComingSoon />}
+                element={<ConnectionsPage />}
               />
               <Route
                 path={ERoutePath.CONFIGURATION_TRANSFER}
@@ -59,7 +61,7 @@ const App = () => {
               />
               <Route
                 path={ERoutePath.CONFIGURATION_SAMPLER}
-                element={<ComingSoon />}
+                element={<SettingSamplerPage />}
               />
 
               {/* Devices  */}
