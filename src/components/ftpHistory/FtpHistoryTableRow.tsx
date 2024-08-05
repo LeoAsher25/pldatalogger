@@ -19,7 +19,7 @@ export default function FtpHistoryTableRow({
     <TableRow
       key={index}
       sx={{
-        backgroundColor: index % 2 == 1 ? "#F6F6F6" : "white",
+        backgroundColor: index % 2 === 1 ? "#F6F6F6" : "white",
       }}>
       <TableCell size="medium"> {index + 1} </TableCell>
       <TableCell
@@ -27,7 +27,7 @@ export default function FtpHistoryTableRow({
           whiteSpace: "nowrap",
           position: "sticky",
           left: 0,
-          backgroundColor: index % 2 == 1 ? "#F6F6F6" : "white",
+          backgroundColor: index % 2 === 1 ? "#F6F6F6" : "white",
           zIndex: "9",
         }}>
         {row?.time}

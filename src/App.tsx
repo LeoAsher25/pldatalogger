@@ -13,6 +13,7 @@ import MainLayout from "./layouts/MainLayout";
 import FtpHistoryPage from "./pages/FtpHistoryPage";
 import Login from "./pages/Login";
 import ERoutePath from "./types/routes.enum";
+import { SensorsPage } from "./pages/configuration/SensorsPage";
 
 const App = () => {
   const appliedTheme = createTheme();
@@ -43,9 +44,10 @@ const App = () => {
               <Route path={ERoutePath.TABLE} element={<FtpHistoryPage />} />
               <Route path={ERoutePath.SAMPLE} element={<Sample />} />
 
+              {/* Configuration */}
               <Route
                 path={ERoutePath.CONFIGURATION_SENSORS}
-                element={<ComingSoon />}
+                element={<SensorsPage />}
               />
               <Route
                 path={ERoutePath.CONFIGURATION_CONNECTION}
@@ -60,6 +62,7 @@ const App = () => {
                 element={<ComingSoon />}
               />
 
+              {/* Devices  */}
               <Route
                 path={ERoutePath.DEVICE_GENERAL}
                 element={<ComingSoon />}

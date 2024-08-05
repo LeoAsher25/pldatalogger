@@ -1,3 +1,5 @@
+import { SystemTypes } from "src/types";
+
 const historyData: SystemTypes.IHistoryData = {
   code: 200,
   data: {

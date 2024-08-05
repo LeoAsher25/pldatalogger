@@ -1,3 +1,5 @@
+import { SystemTypes } from "src/types";
+
 const sensorsList: {
   code: number;
   data: SystemTypes.SensorData[];

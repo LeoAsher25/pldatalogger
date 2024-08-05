@@ -1,21 +1,36 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-declare namespace SystemTypes {
-  enum DataStatus {
+export namespace SystemTypes {
+  export enum DataStatus {
     MEASURING,
   }
 
-  interface ILoginFormData {
-    email: string;
+  export enum ESensorStatus {
+    MEASURING,
+    CALIBRATING,
+    ERROR,
+    AUTO,
+    MAX,
+  }
+
+  export interface IResponse {
+    code?: string;
+    message: string;
+  }
+
+  export interface ILoginFormData {
+    username: string;
     password: string;
     remember?: boolean;
   }
 
-  interface ILoginResponse {
-    accessToken: string;
-    refreshToken: string;
+  export interface ILoginResponse extends IResponse {
+    data: {
+      accessToken: string;
+      refreshToken: string;
+    };
+    user: UserTypes.IProfile;
   }
 
-  interface ISensorData {
+  export interface ISensorData {
     status: DataStatus;
     alert: boolean;
     alertEarly: boolean;
@@ -25,7 +40,7 @@ declare namespace SystemTypes {
     value: string;
   }
 
-  interface IRealtimeData {
+  export interface IRealtimeData {
     alert: boolean;
     alertEarly: boolean;
     enabled: boolean;
@@ -38,7 +53,7 @@ declare namespace SystemTypes {
     value: string;
   }
 
-  interface ISampleData {
+  export interface ISampleData {
     address: string;
     autorun: boolean;
     connected: boolean;
@@ -63,35 +78,35 @@ declare namespace SystemTypes {
     username: string;
   }
 
-  interface IChartSensorData {
+  export interface IChartSensorData {
     status: number[];
     times: number[];
     values: number[] | string[];
   }
 
-  interface IChartSensorDataResponse {
+  export interface IChartSensorDataResponse {
     code: number;
     data: IChartSensorData;
   }
 
-  interface IHistoryDataHeader {
+  export interface IHistoryDataHeader {
     name: string;
     unit: string;
   }
 
-  interface IHistoryDataPoint {
+  export interface IHistoryDataPoint {
     status: number;
     value: string;
   }
 
-  interface IHistoryRow {
+  export interface IHistoryRow {
     data: IHistoryDataPoint[];
     id: number;
     sent: boolean;
     time: string;
   }
 
-  interface IHistoryData {
+  export interface IHistoryData {
     code: number;
     data: {
       headers: IHistoryDataHeader[];
@@ -99,33 +114,33 @@ declare namespace SystemTypes {
     };
   }
 
-  interface Alarm {
+  export interface Alarm {
     earlyHighThreshold: string;
     earlyLowThreshold: string;
     highThreshold: string;
     lowThreshold: string;
   }
 
-  interface Calibration {
+  export interface Calibration {
     formula: string;
     offset: string;
     positive: boolean;
     slope: string;
   }
 
-  interface CustomizeTotal {
+  export interface CustomizeTotal {
     autoSlope: boolean;
     sensorId: number;
     totalId: number;
     totalMode: number;
   }
 
-  interface HttpWtw {
+  export interface HttpWtw {
     sid: number;
     vid: number;
   }
 
-  interface ModbusStandard {
+  export interface ModbusStandard {
     dataType: number;
     deviceAddress: number;
     endian: number;
@@ -133,33 +148,33 @@ declare namespace SystemTypes {
     startAddress: number;
   }
 
-  interface SerialSigas {
+  export interface SerialSigas {
     index: number;
   }
 
-  interface SerialSystea {
+  export interface SerialSystea {
     index: number;
     line: number;
   }
 
-  interface SerialTeom {
+  export interface SerialTeom {
     channelNumber: string;
     prc: number;
     stationNumber: number;
   }
 
-  interface SerialYoung {
+  export interface SerialYoung {
     index: number;
   }
 
-  interface SqlDcs {
+  export interface SqlDcs {
     column: string;
     dataType: number;
     required: boolean;
     table: string;
   }
 
-  interface SqlStandard {
+  export interface SqlStandard {
     column: string;
     columnIndex: number;
     dataType: number;
@@ -167,17 +182,17 @@ declare namespace SystemTypes {
     table: string;
   }
 
-  interface ViewCommon {
+  export interface ViewCommon {
     index: number;
     visible: boolean;
   }
 
-  interface ViewGrid {
+  export interface ViewGrid {
     columnSpan: number;
     rowSpan: number;
   }
 
-  interface Configuration {
+  export interface Configuration {
     customize: {
       total: CustomizeTotal;
     };
@@ -203,7 +218,7 @@ declare namespace SystemTypes {
     };
   }
 
-  interface SensorStatus {
+  export interface ISensorStatus {
     configuration: {
       customize: {
         dependency: {
@@ -228,7 +243,7 @@ declare namespace SystemTypes {
     sensorId: number;
   }
 
-  interface SensorData {
+  export interface SensorData {
     alarm: Alarm;
     calibration: Calibration;
     configuration: Configuration;
@@ -242,7 +257,7 @@ declare namespace SystemTypes {
     name: string;
     precision: number;
     protocol: number;
-    sensorStatus: SensorStatus;
+    sensorStatus: ISensorStatus;
     status: number;
     syncing: boolean;
     unit: string;
@@ -250,104 +265,36 @@ declare namespace SystemTypes {
   }
 }
 
-declare namespace UserTypes {
-  interface IProfile {
-    email: string;
-    fullName: string;
+export namespace UserTypes {
+  export interface IProfile {
+    active: boolean;
+    name: string;
+    roles: number;
+    username: string;
     avatar?: string;
   }
 }
 
-declare namespace SystemUI {
-  interface NavItem {
+export namespace SystemUI {
+  export interface NavItem {
     name: string;
     url: string;
     icon?: React.ElementType;
     children?: NavItem[];
   }
 
-  interface NavGroupProps {
+  export interface NavGroupProps {
     data: NavItem[];
     collapsed: boolean;
   }
 
-  interface NavItemProps {
+  export interface NavItemProps {
     item: NavItem;
     collapsed: boolean;
   }
 
-  interface BreadcrumbItem {
+  export interface BreadcrumbItem {
     title: string;
     path: string;
-  }
-
-  // test new
-
-  interface TestNavItem {
-    title: string;
-    path: string;
-    icon?: React.ReactNode;
-    info?: React.ReactNode;
-    children?: TestNavItem[];
-  }
-
-  // Type for NavSectionVertical component
-  interface TestNavSectionVerticalProps {
-    isCollapse?: boolean;
-    navConfig: TestNavGroup[];
-    other?: React.ReactNode; // Additional props that might be passed
-  }
-
-  // Type for a group of navigation items
-  interface TestNavGroup {
-    subheader: string;
-    items: TestNavItem[];
-  }
-
-  // Type for NavListRoot component
-  interface TestNavListRootProps {
-    list: TestNavItem;
-    isCollapse?: boolean;
-  }
-
-  // Type for NavListSub component
-  interface TestNavListSubProps {
-    list: TestNavItem;
-  }
-
-  // Type for TestNavItem component
-  interface TestNavItemRootProps {
-    item: TestNavItem;
-    isCollapse?: boolean;
-    open?: boolean;
-    active?: boolean;
-    onOpen?: () => void;
-  }
-
-  // Type for TestNavItem component
-  interface TestNavItemSubProps {
-    item: TestNavItem;
-    open?: boolean;
-    active?: boolean;
-    onOpen?: () => void;
-  }
-
-  // Type for ListItemStyle props (styled component)
-  interface TestListItemStyleProps {
-    activeRoot?: boolean;
-    activeSub?: boolean;
-    subItem?: boolean;
-    sx?: any; // MUI's style system prop for styling
-  }
-
-  // Type for ListItemTextStyle props (styled component)
-  interface TestListItemTextStyleProps {
-    isCollapse?: boolean;
-    sx?: any; // MUI's style system prop for styling
-  }
-
-  // Type for ListItemIconStyle props (styled component)
-  interface TestListItemIconStyleProps {
-    sx?: any; // MUI's style system prop for styling
   }
 }

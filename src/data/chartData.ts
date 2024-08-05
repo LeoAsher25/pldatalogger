@@ -1,3 +1,5 @@
+import { SystemTypes } from "src/types";
+
 const chartData: SystemTypes.IChartSensorDataResponse = {
   code: 200,
   data: {

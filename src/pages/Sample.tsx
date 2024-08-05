@@ -21,6 +21,7 @@ import {
 import Label from "src/components/hook-form/Label";
 import useSettingHeader from "src/hooks/useSettingHeader";
 import { mockApi } from "src/utils/mookApi";
+import { SystemTypes } from "src/types";
 
 // ----------------------------------------------------------------------
 
@@ -105,7 +106,7 @@ export default function Sample() {
                       Trạng thái
                     </TableCell>
                     <TableCell>
-                      {tableData.enabled != undefined && (
+                      {tableData.enabled !== undefined && (
                         <Label
                           variant={
                             theme.palette.mode === "light" ? "ghost" : "filled"
@@ -124,7 +125,7 @@ export default function Sample() {
                       Chế độ tự động
                     </TableCell>
                     <TableCell>
-                      {tableData.autorun != undefined && (
+                      {tableData.autorun !== undefined && (
                         <Label
                           variant={
                             theme.palette.mode === "light" ? "ghost" : "filled"
@@ -207,7 +208,7 @@ export default function Sample() {
                 onClick={startSampling}>
                 Lấy mẫu
               </Button>
-              {tableData?.model != 5 && (
+              {tableData?.model !== 5 && (
                 <Button
                   fullWidth
                   size="large"

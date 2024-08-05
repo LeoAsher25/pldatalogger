@@ -12,7 +12,6 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
 import clsx from "clsx";
 import React, { Fragment, useState } from "react";
 import { Outlet } from "react-router-dom";
@@ -61,6 +60,7 @@ const useStyles = makeStyles((theme: any) => ({
     backgroundColor: "white",
   },
   menuButton: {
+    display: (extended) => (extended ? "none !important" : "block"),
     marginRight: theme.spacing(2),
     color: theme.palette.text.primary + " !important",
     [theme.breakpoints.up("sm")]: {
@@ -172,7 +172,6 @@ interface MainLayoutProps {
 }
 
 const MainLayout: React.FC<MainLayoutProps> = ({ navigationData }) => {
-  const theme = useTheme();
   const { pageTitle } = useAppSelector(
     (state: RootState) => state.settingsState
   );

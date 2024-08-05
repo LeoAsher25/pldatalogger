@@ -8,39 +8,42 @@ import { LoadingButton } from "@mui/lab";
 import { IconButton, InputAdornment, Stack } from "@mui/material";
 
 // components
-import { Navigate, useNavigate } from "react-router";
+import { useRequest } from "ahooks";
+import { useNavigate } from "react-router";
 import { RHFCheckbox } from "src/components/hook-form/RHFCheckbox";
 import RHFTextField from "src/components/hook-form/RHFTextField";
 import { useAppDispatch, useAppSelector } from "src/hooks/customReduxHook";
-import {
-  getProfileMethod,
-  loginMethod,
-} from "src/stores/auth/authThunkActions";
+import authApi from "src/services/authApi";
+import { authActions } from "src/stores/auth/authSlice";
 import { RootState } from "src/stores/rootReducer";
+import { SystemTypes } from "src/types";
 import ERoutePath from "src/types/routes.enum";
 import Iconify from "../Iconify";
 
 const defaultValues: SystemTypes.ILoginFormData = {
-  email: "",
-  password: "",
+  username: "administrator",
+  password: "123456aA@",
   remember: true,
 };
 
 const LoginSchema = Yup.object().shape({
-  email: Yup.string() /*.email('Email must be a valid email address')*/
-    .required("Email is required"),
+  username: Yup.string().required("Username is required"),
   password: Yup.string().required("Password is required"),
   remember: Yup.boolean(),
 });
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
-  const { currentUser } = useAppSelector((state: RootState) => state.authState);
+  const { accessToken } = useAppSelector((state: RootState) => state.authState);
 
   const navigate = useNavigate();
 
+  const { loading, runAsync: runLogin } = useRequest(authApi.login, {
+    manual: true,
+  });
+
   const dispatch = useAppDispatch();
-  const methods = useForm<SystemTypes.ILoginFormData>({
+  const formInstance = useForm<SystemTypes.ILoginFormData>({
     resolver: yupResolver(LoginSchema),
     defaultValues,
   });
@@ -49,12 +52,20 @@ export default function LoginForm() {
     reset,
     handleSubmit,
     formState: { isSubmitting },
-  } = methods;
+  } = formInstance;
 
   const onSubmit = async (data: SystemTypes.ILoginFormData) => {
     try {
-      const response = await dispatch(loginMethod(data));
-      await dispatch(getProfileMethod());
+      const response = await runLogin(data);
+
+      dispatch(
+        authActions.setItem({
+          accessToken: response.data.data.accessToken,
+          refreshToken: response.data.data.refreshToken,
+          currentUser: response.data.user,
+        })
+      );
+      // await dispatch(getProfileMethod());
     } catch (error: any) {
       console.error(error);
       reset();
@@ -62,16 +73,17 @@ export default function LoginForm() {
   };
 
   useEffect(() => {
-    if (currentUser) {
+    console.log("currentUser: ", accessToken);
+    if (accessToken) {
       navigate(ERoutePath.HOME_PAGE);
     }
-  }, [currentUser, navigate]);
+  }, [accessToken, navigate]);
 
   return (
-    <FormProvider {...methods}>
+    <FormProvider {...formInstance}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={3}>
-          <RHFTextField name="email" label="Username" />
+          <RHFTextField name="username" label="Username" />
           <RHFTextField
             name="password"
             label="Password"
@@ -105,7 +117,7 @@ export default function LoginForm() {
           size="large"
           type="submit"
           variant="contained"
-          loading={isSubmitting}>
+          loading={loading || isSubmitting}>
           Đăng nhập
         </LoadingButton>
       </form>

@@ -1,11 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import {
   getLocalStorage,
   removeLocalStorage,
   setLocalStorage,
 } from "src/utils/localStorage";
-import { getProfileMethod, loginMethod } from "./authThunkActions";
 
 interface IInitialAuthState {
   accessToken: string;
@@ -31,27 +30,14 @@ const authSlice = createSlice({
       removeLocalStorage("refreshToken");
       removeLocalStorage("currentUser");
     },
-    setItem(state, action) {
+    setItem(state, action: PayloadAction<IInitialAuthState>) {
       Object.assign(state, action.payload);
+      setLocalStorage("accessToken", action.payload.accessToken);
+      setLocalStorage("refreshToken", action.payload.refreshToken);
+      setLocalStorage("currentUser", action.payload.currentUser);
     },
   },
-  extraReducers: (builder) => {
-    builder.addCase(loginMethod.fulfilled, (state, action) => {
-      const payload = action.payload as SystemTypes.ILoginResponse;
-      state.accessToken = payload.accessToken!;
-      state.refreshToken = payload.refreshToken!;
-      setLocalStorage("refreshToken", state.refreshToken);
-      setLocalStorage("accessToken", state.accessToken);
-    });
-
-    builder.addCase(getProfileMethod.fulfilled, (state, action) => {
-      const payload = action.payload as UserTypes.IProfile;
-      state.currentUser = {
-        ...payload,
-      };
-      setLocalStorage("currentUser", state.currentUser);
-    });
-  },
+  extraReducers: (builder) => {},
 });
 
 export const authReducer = authSlice.reducer;

@@ -2,10 +2,12 @@ import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import { authReducer } from "src/stores/auth/authSlice";
 import { settingsReducer } from "src/stores/settings/settingsSlice";
+import configurationReducer from "src/stores/configuration";
 
 const reducer = combineReducers({
   authState: authReducer,
   settingsState: settingsReducer,
+  configurationState: configurationReducer,
 });
 
 export const store = configureStore({

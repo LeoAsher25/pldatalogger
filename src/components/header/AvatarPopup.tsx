@@ -57,7 +57,7 @@ const AvatarPopup = () => {
             px: 2.5,
           }}>
           <Typography variant="subtitle2" noWrap>
-            {currentUser?.fullName}
+            {currentUser?.name}
           </Typography>
           <Typography
             variant="body2"
@@ -65,7 +65,7 @@ const AvatarPopup = () => {
               color: "text.secondary",
             }}
             noWrap>
-            {currentUser?.email}
+            {currentUser?.username}
           </Typography>
         </Box>
         <Divider

@@ -1,3 +1,5 @@
+import { SystemTypes } from "src/types";
+
 const realTimeData: SystemTypes.ISensorData[] = [
   {
     alert: false,
