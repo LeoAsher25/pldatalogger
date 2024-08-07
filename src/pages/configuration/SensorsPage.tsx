@@ -34,7 +34,7 @@ import {
   getConnections,
   getDefines,
   getSensors,
-} from "src/stores/configuration";
+} from "src/redux/configuration";
 
 interface Sensor {
   id: string;

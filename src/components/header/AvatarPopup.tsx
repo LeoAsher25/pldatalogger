@@ -9,8 +9,8 @@ import {
 import React, { Fragment } from "react";
 import { useNavigate } from "react-router";
 import { useAppDispatch, useAppSelector } from "src/hooks/customReduxHook";
-import { authActions } from "src/stores/auth/authSlice";
-import { RootState } from "src/stores/rootReducer";
+import { authActions } from "src/redux/auth";
+import { RootState } from "src/redux/rootReducer";
 import ERoutePath from "src/types/routes.enum";
 
 const AvatarPopup = () => {

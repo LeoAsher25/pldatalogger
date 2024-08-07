@@ -21,7 +21,7 @@ import {
 import { useEffect, useState } from "react";
 import { Models, Protocols } from "src/defines";
 import { useAppDispatch, useAppSelector } from "src/hooks/customReduxHook";
-import { createSensor, updateSensor } from "src/stores/configuration";
+import { createSensor, updateSensor } from "src/redux/configuration";
 import { SystemTypes } from "src/types";
 import RHFSelect from "../hook-form/RHFSelect";
 import RHFSwitch from "../hook-form/RHFSwitch";

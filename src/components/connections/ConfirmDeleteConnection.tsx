@@ -12,7 +12,7 @@ import {
 
 // components
 import { useAppDispatch } from "src/hooks/customReduxHook";
-import { deleteConnection } from "src/stores/configuration";
+import { deleteConnection } from "src/redux/configuration";
 
 // ----------------------------------------------------------------------
 

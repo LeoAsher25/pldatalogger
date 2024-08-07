@@ -26,7 +26,7 @@ import {
   getConnections,
   getDefines,
   getWebServerConfig,
-} from "src/stores/configuration";
+} from "src/redux/configuration";
 import { useAppDispatch, useAppSelector } from "src/hooks/customReduxHook";
 import ConnectionForm from "src/components/connections/ConnectionForm";
 import ConfirmDeleteConnectionForm from "src/components/connections/ConfirmDeleteConnection";

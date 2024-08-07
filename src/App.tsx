@@ -16,6 +16,8 @@ import ERoutePath from "./types/routes.enum";
 import { SensorsPage } from "./pages/configuration/SensorsPage";
 import SettingSamplerPage from "src/pages/configuration/SettingSamplerPage";
 import ConnectionsPage from "src/pages/configuration/ConnectionsPage";
+import UpdaterPage from "./pages/device/UpdaterPage";
+import DataRealtime from "src/pages/device/GeneralPage";
 
 const App = () => {
   const appliedTheme = createTheme();
@@ -67,14 +69,14 @@ const App = () => {
               {/* Devices  */}
               <Route
                 path={ERoutePath.DEVICE_GENERAL}
-                element={<ComingSoon />}
+                element={<DataRealtime />}
               />
               <Route
                 path={ERoutePath.DEVICE_NETWORK}
                 element={<ComingSoon />}
               />
               <Route path={ERoutePath.DEVICE_TIME} element={<ComingSoon />} />
-              <Route path={ERoutePath.DEVICE_OTA} element={<ComingSoon />} />
+              <Route path={ERoutePath.DEVICE_OTA} element={<UpdaterPage />} />
             </Route>
           </Routes>
         </ThemeProvider>

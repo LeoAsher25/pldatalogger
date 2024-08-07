@@ -10,7 +10,7 @@ import {
   DialogTitle,
 } from "@mui/material";
 import { useAppDispatch } from "src/hooks/customReduxHook";
-import { deleteSensor } from "src/stores/configuration";
+import { deleteSensor } from "src/redux/configuration";
 
 // ----------------------------------------------------------------------
 

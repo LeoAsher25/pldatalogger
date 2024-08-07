@@ -16,7 +16,7 @@ import {
   getDefines,
   getSampler,
   updateSampler,
-} from "src/stores/configuration";
+} from "src/redux/configuration";
 import { useLocation } from "react-router";
 
 // ----------------------------------------------------------------------

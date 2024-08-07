@@ -1,7 +1,9 @@
+import { Navigate } from "react-router-dom";
 import axios from "axios";
 import queryString from "query-string";
 import { SystemTypes } from "src/types";
 import { getLocalStorage } from "src/utils/localStorage";
+import ERoutePath from "src/types/routes.enum";
 
 export const axiosInstance = axios.create({
   withCredentials: false,
@@ -37,48 +39,46 @@ async function handleRepositoryError(error: any) {
   if (error.response) {
     // Access token was expired
 
-    // if (
-    //   (originalConfig.url.includes("auth/profile") ||
-    //     !originalConfig.url.includes("auth/")) &&
-    //   error.response.status === 401 &&
-    //   !originalConfig._retry
-    // ) {
-    //   originalConfig._retry = true;
-    //   try {
-    //     const response = await axiosInstance.post(
-    //       "auth/refresh-token",
-    //       {
-    //         refreshToken: getLocalStorage("refreshToken"),
-    //       },
-    //       {
-    //         withCredentials: false,
-    //         baseURL: process.env.REACT_APP_BASE_URL,
-    //         headers: {
-    //           "Content-Type": "application/json",
-    //         },
-    //         paramsSerializer: (params) => queryString.stringify(params),
-    //       }
-    //     );
-    //     const { accessToken, refreshToken } = response.data;
-    //     store?.dispatch(
-    //       authActions.setItem({
-    //         accessToken: accessToken,
-    //         refreshToken: refreshToken,
-    //       })
-    //     );
-
-    //     axiosInstance.defaults.headers.common["Authorization"] =
-    //       "Bearer " + accessToken;
-
-    //     originalConfig.headers["Authorization"] = "Bearer " + accessToken;
-
-    //     return axios(originalConfig);
-    //   } catch (error) {
-    //     return Promise.reject<SystemTypes.IResponse>(
-    //       error as SystemTypes.IResponse
-    //     );
-    //   }
-    // }
+    if (
+      // originalConfig.url.includes("auth/profile") ||
+      !originalConfig.url.includes("auth/") &&
+      error.response.status === 401 &&
+      !originalConfig._retry
+    ) {
+      originalConfig._retry = true;
+      try {
+        <Navigate to={ERoutePath.LOGIN} />;
+        // const response = await axiosInstance.post(
+        //   "auth/refresh-token",
+        //   {
+        //     refreshToken: getLocalStorage("refreshToken"),
+        //   },
+        //   {
+        //     withCredentials: false,
+        //     baseURL: process.env.REACT_APP_BASE_URL,
+        //     headers: {
+        //       "Content-Type": "application/json",
+        //     },
+        //     paramsSerializer: (params) => queryString.stringify(params),
+        //   }
+        // );
+        // const { accessToken, refreshToken } = response.data;
+        // store?.dispatch(
+        //   authActions.setItem({
+        //     accessToken: accessToken,
+        //     refreshToken: refreshToken,
+        //   })
+        // );
+        // axiosInstance.defaults.headers.common["Authorization"] =
+        //   "Bearer " + accessToken;
+        // originalConfig.headers["Authorization"] = "Bearer " + accessToken;
+        // return axios(originalConfig);
+      } catch (error) {
+        return Promise.reject<SystemTypes.IResponse>(
+          error as SystemTypes.IResponse
+        );
+      }
+    }
 
     // refreshTokenRetryCount = 0;
 

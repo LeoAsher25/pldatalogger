@@ -3,7 +3,7 @@ import { Navigate, useLocation } from "react-router-dom";
 // components
 import { useAppSelector } from "src/hooks/customReduxHook";
 import Login from "src/pages/Login";
-import { RootState } from "src/stores/rootReducer";
+import { RootState } from "src/redux/rootReducer";
 
 // ----------------------------------------------------------------------
 

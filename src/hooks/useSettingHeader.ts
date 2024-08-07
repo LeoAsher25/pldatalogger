@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useAppDispatch } from "src/hooks/customReduxHook";
-import { RootState } from "src/stores/rootReducer";
-import { settingsActions } from "src/stores/settings/settingsSlice";
+import { RootState } from "src/redux/rootReducer";
+import { settingsActions } from "src/redux/settings";
 
 const useSettingHeader = ({
   pageTitle,

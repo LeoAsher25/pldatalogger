@@ -21,7 +21,7 @@ import Navigation from "src/components/Navigation/Navigation";
 import Page from "src/components/Page";
 import AvatarPopup from "src/components/header/AvatarPopup";
 import { useAppSelector } from "src/hooks/customReduxHook";
-import { RootState } from "src/stores/rootReducer";
+import { RootState } from "src/redux/rootReducer";
 
 const drawerWidth = 280;
 const useStyles = makeStyles((theme: any) => ({
@@ -60,7 +60,10 @@ const useStyles = makeStyles((theme: any) => ({
     backgroundColor: "white",
   },
   menuButton: {
-    display: (extended) => (extended ? "none !important" : "block"),
+    display: (extended) => {
+      console.log("extended: ", extended);
+      return extended ? "none !important" : "block";
+    },
     marginRight: theme.spacing(2),
     color: theme.palette.text.primary + " !important",
     [theme.breakpoints.up("sm")]: {

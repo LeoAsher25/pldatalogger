@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { SystemUI } from "src/types";
 
 export interface IInitialSettingState {
   pageTitle: string;

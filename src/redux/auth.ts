@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { UserTypes } from "src/types";
 
 import {
   getLocalStorage,
@@ -18,7 +19,7 @@ const initialState: IInitialAuthState = {
   currentUser: getLocalStorage("currentUser"),
 };
 
-const authSlice = createSlice({
+const auth = createSlice({
   name: "auth",
   initialState,
   reducers: {
@@ -40,6 +41,6 @@ const authSlice = createSlice({
   extraReducers: (builder) => {},
 });
 
-export const authReducer = authSlice.reducer;
+export const authReducer = auth.reducer;
 
-export const authActions = authSlice.actions;
+export const authActions = auth.actions;

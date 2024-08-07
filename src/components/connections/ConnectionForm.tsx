@@ -18,7 +18,7 @@ import {
 
 import { HttpVersion, Models, Protocols } from "src/defines";
 import { useAppDispatch, useAppSelector } from "src/hooks/customReduxHook";
-import { createConnection, updateConnection } from "src/stores/configuration";
+import { createConnection, updateConnection } from "src/redux/configuration";
 import RHFTextField from "src/components/hook-form/RHFTextField";
 import RHFSwitch from "src/components/hook-form/RHFSwitch";
 import RHFSelect from "src/components/hook-form/RHFSelect";
