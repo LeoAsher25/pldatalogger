@@ -20,7 +20,6 @@ import {
 
 import Label from "src/components/hook-form/Label";
 import useSettingHeader from "src/hooks/useSettingHeader";
-import { mockApi } from "src/utils/mookApi";
 import { SystemTypes } from "src/types";
 
 // ----------------------------------------------------------------------
@@ -63,7 +62,6 @@ export default function Sample() {
     try {
       console.log("position: ", position);
       console.log("times: ", times);
-      await mockApi({}, 500);
     } catch (err) {
       console.log("");
       setCode(0);
@@ -72,7 +70,6 @@ export default function Sample() {
 
   const resetSampling = async () => {
     try {
-      await mockApi({}, 500);
     } catch (err) {
       setCode(0);
     }
