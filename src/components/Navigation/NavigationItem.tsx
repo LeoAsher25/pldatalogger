@@ -25,7 +25,7 @@ const useStyles: any = makeStyles((theme: Theme) => ({
     overflow: "hidden",
     backgroundColor: "white",
 
-    "& .MuiCollapse-wrapper [class*=makeStyles-listLink]": {
+    "& .MuiCollapse-wrapper .list-item-list-link": {
       padding: "0 20px 0 10px !important",
     },
   },
@@ -119,6 +119,7 @@ const NavigationItem = ({ item, collapsed }: SystemUI.NavItemProps) => {
           component={!nested ? Link : "div"}
           to={!nested ? `${item.url}` : undefined}
           className={clsx(
+            "list-item-list-link",
             classes.listLink,
             collapsed && classes.listLinkCollapsed
           )}>

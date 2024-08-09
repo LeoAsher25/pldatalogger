@@ -107,7 +107,7 @@ const useStyles = makeStyles((theme: any) => ({
     ...theme.mixins.toolbar,
   },
   drawerPaper: {
-    "&[class*='makeStyles-drawerPaper']": {
+    "&.drawer-paper-wrap": {
       width: drawerWidth,
       display: "flex",
       position: "fixed",
@@ -123,7 +123,7 @@ const useStyles = makeStyles((theme: any) => ({
     },
   },
   drawerPaperClose: {
-    "&[class*='makeStyles-drawerPaperClose']": {
+    "&.drawer-paper-close-wrap": {
       [theme.breakpoints.up("sm")]: {
         overflowX: "hidden",
         transition: theme.transitions.create("width", {
@@ -198,7 +198,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ navigationData }) => {
     return (
       <Fragment>
         <div className={classes.toolbarIcon}>
-          <img width={46} src="images/logo.png" alt="logo" />
+          <img width={46} src="/images/logo.png" alt="logo" />
           <IconButton
             onClick={handleExtendClose}
             className={classes.collapseButton}>
@@ -255,6 +255,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({ navigationData }) => {
             classes={{
               paper: classes.drawerPaper,
             }}
+            PaperProps={{
+              className: "drawer-paper-wrap",
+            }}
             ModalProps={{
               keepMounted: true,
             }}>
@@ -269,6 +272,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({ navigationData }) => {
                 classes.drawerPaper,
                 !extended && classes.drawerPaperClose
               ),
+            }}
+            PaperProps={{
+              className: "drawer-paper-wrap drawer-paper-close-wrap",
             }}
             open={extended}>
             {renderDrawer(false)}
