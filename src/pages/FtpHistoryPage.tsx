@@ -153,7 +153,7 @@ export default function FtpHistoryPage() {
 
   return (
     <Page title="Tra số liệu">
-      <Container maxWidth={"xl"}>
+      <Container maxWidth={"xl"} sx={{ padding: "0px !important" }}>
         <Card>
           <Stack
             spacing={2}

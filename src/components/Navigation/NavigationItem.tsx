@@ -48,11 +48,10 @@ const useStyles: any = makeStyles((theme: Theme) => ({
     height: "100%",
   },
   listLinkCollapsed: {
-    [theme.breakpoints.up("sm")]: {
-      width: theme.spacing(7),
-      flexDirection: "column",
-      justifyContent: "center",
-    },
+    width: theme.spacing(7),
+    flexDirection: "column",
+    justifyContent: "center",
+    [theme.breakpoints.up("sm")]: {},
   },
   listIcon: {
     color: "inherit",

@@ -77,7 +77,7 @@ export default function Sample() {
 
   return (
     <Box>
-      <Container maxWidth={"sm"}>
+      <Container maxWidth={"sm"} sx={{ padding: "0px !important" }}>
         <Card>
           <Stack
             spacing={3}

@@ -13,8 +13,8 @@ import {
   Typography,
 } from "@mui/material";
 import clsx from "clsx";
-import React, { Fragment, useState } from "react";
-import { Outlet } from "react-router-dom";
+import React, { Fragment, useEffect, useState } from "react";
+import { Outlet, useLocation } from "react-router-dom";
 
 import { makeStyles } from "@mui/styles";
 import Navigation from "src/components/Navigation/Navigation";
@@ -22,37 +22,37 @@ import Page from "src/components/Page";
 import AvatarPopup from "src/components/header/AvatarPopup";
 import { useAppSelector } from "src/hooks/customReduxHook";
 import { RootState } from "src/redux/rootReducer";
+import { Theme } from "@material-ui/core";
+import useResponsive from "src/hooks/useResponsive";
 
 const drawerWidth = 280;
-const useStyles = makeStyles((theme: any) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     display: "flex",
     height: "100vh",
   },
   appBarShift: {
     "&.MuiPaper-root": {
-      [theme.breakpoints.up("sm")]: {
-        zIndex: theme.zIndex.drawer + 2,
-        transition: theme.transitions.create(["width", "margin"], {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen,
-        }),
-      },
+      zIndex: theme.zIndex.drawer + 2,
+      transition: theme.transitions.create(["width", "margin"], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+      [theme.breakpoints.up("sm")]: {},
     },
   },
   appBar: {
     "&.MuiPaper-root": {
       backgroundColor: "transparent",
       boxShadow: "none",
-      [theme.breakpoints.up("sm")]: {
-        width: `calc(100% - ${drawerWidth}px)`,
-        marginLeft: drawerWidth,
-        zIndex: theme.zIndex.drawer + 2,
-        transition: theme.transitions.create(["width", "margin"], {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen,
-        }),
-      },
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth,
+      zIndex: theme.zIndex.drawer + 2,
+      transition: theme.transitions.create(["width", "margin"], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+      [theme.breakpoints.up("sm")]: {},
     },
     boxShadow: "none",
     border: "0",
@@ -61,7 +61,6 @@ const useStyles = makeStyles((theme: any) => ({
   },
   menuButton: {
     display: (extended) => {
-      console.log("extended: ", extended);
       return extended ? "none !important" : "block";
     },
     marginRight: theme.spacing(2),
@@ -72,17 +71,13 @@ const useStyles = makeStyles((theme: any) => ({
   },
   collapseButton: {
     color: theme.palette.text.primary,
-    [theme.breakpoints.down("xs")]: {
-      display: "none",
-    },
+    [theme.breakpoints.down("sm")]: { display: "none" },
   },
   extendButton: {
     "&.MuiButtonBase-root": {
       color: theme.palette.text.primary,
       marginRight: 36,
-      [theme.breakpoints.down("xs")]: {
-        display: "none",
-      },
+      [theme.breakpoints.down("sm")]: { display: "none !important" },
     },
   },
   extendButtonHidden: {
@@ -96,6 +91,7 @@ const useStyles = makeStyles((theme: any) => ({
       height: 80,
       backgroundColor: "white",
       ...theme.mixins.toolbar,
+      minHeight: "80px !important",
     },
   },
   toolbarIcon: {
@@ -124,14 +120,15 @@ const useStyles = makeStyles((theme: any) => ({
   },
   drawerPaperClose: {
     "&.drawer-paper-close-wrap": {
-      [theme.breakpoints.up("sm")]: {
-        overflowX: "hidden",
-        transition: theme.transitions.create("width", {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing(7),
+      [theme.breakpoints.down("sm")]: {
+        display: "none",
       },
+      overflowX: "hidden",
+      transition: theme.transitions.create("width", {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+      width: theme.spacing(7),
     },
   },
   appBarTitle: {
@@ -178,9 +175,12 @@ const MainLayout: React.FC<MainLayoutProps> = ({ navigationData }) => {
   const { pageTitle } = useAppSelector(
     (state: RootState) => state.settingsState
   );
+  const smUp = useResponsive("up", "sm");
   const [extended, setExtended] = useState<boolean>(true);
   const classes = useStyles(extended);
   const [mobileOpen, setMobileOpen] = useState<boolean>(false);
+
+  const { pathname } = useLocation();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -193,6 +193,16 @@ const MainLayout: React.FC<MainLayoutProps> = ({ navigationData }) => {
   const handleExtendClose = () => {
     setExtended(false);
   };
+
+  useEffect(() => {
+    setExtended(smUp!);
+  }, [smUp]);
+
+  useEffect(() => {
+    if (mobileOpen) {
+      setMobileOpen(false);
+    }
+  }, [pathname]);
 
   const renderDrawer = (isHidden: boolean) => {
     return (
@@ -264,7 +274,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ navigationData }) => {
             {renderDrawer(true)}
           </Drawer>
         </Hidden>
-        <Hidden xsDown implementation="css">
+        <Hidden smDown implementation="css">
           <Drawer
             variant="permanent"
             classes={{
@@ -288,7 +298,10 @@ const MainLayout: React.FC<MainLayoutProps> = ({ navigationData }) => {
           <Toolbar className={classes.toolbar} />
           <div
             style={{
-              padding: "24px 32px",
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+              padding: smUp ? "24px 32px" : "12px 12px",
             }}>
             <Outlet />
           </div>
