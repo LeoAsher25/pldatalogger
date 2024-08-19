@@ -1,8 +1,4 @@
-import {
-  ChevronLeft as ChevronLeftIcon,
-  ChevronRight as ChevronRightIcon,
-  Menu as MenuIcon,
-} from "@mui/icons-material";
+import { Menu as MenuIcon } from "@mui/icons-material";
 import {
   AppBar,
   CssBaseline,
@@ -16,14 +12,14 @@ import clsx from "clsx";
 import React, { Fragment, useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 
+import { Theme } from "@material-ui/core";
 import { makeStyles } from "@mui/styles";
 import Navigation from "src/components/Navigation/Navigation";
 import Page from "src/components/Page";
 import AvatarPopup from "src/components/header/AvatarPopup";
 import { useAppSelector } from "src/hooks/customReduxHook";
-import { RootState } from "src/redux/rootReducer";
-import { Theme } from "@material-ui/core";
 import useResponsive from "src/hooks/useResponsive";
+import { RootState } from "src/redux/rootReducer";
 
 const drawerWidth = 280;
 const useStyles = makeStyles((theme: Theme) => ({
@@ -33,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   appBarShift: {
     "&.MuiPaper-root": {
-      zIndex: theme.zIndex.drawer + 2,
+      zIndex: theme.zIndex.drawer,
       transition: theme.transitions.create(["width", "margin"], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
@@ -65,7 +61,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     marginRight: theme.spacing(2),
     color: theme.palette.text.primary + " !important",
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints.up("lg")]: {
       display: "none",
     },
   },
@@ -142,7 +138,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     flexDirection: "column",
     [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(7),
+      // marginLeft: theme.spacing(7),
       transition: theme.transitions.create(["width", "margin"], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
@@ -176,6 +172,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ navigationData }) => {
     (state: RootState) => state.settingsState
   );
   const smUp = useResponsive("up", "sm");
+  const lgUp = useResponsive("up", "lg");
   const [extended, setExtended] = useState<boolean>(true);
   const classes = useStyles(extended);
   const [mobileOpen, setMobileOpen] = useState<boolean>(false);
@@ -195,8 +192,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({ navigationData }) => {
   };
 
   useEffect(() => {
-    setExtended(smUp!);
-  }, [smUp]);
+    setExtended(lgUp!);
+  }, [lgUp]);
 
   useEffect(() => {
     if (mobileOpen) {
@@ -209,11 +206,11 @@ const MainLayout: React.FC<MainLayoutProps> = ({ navigationData }) => {
       <Fragment>
         <div className={classes.toolbarIcon}>
           <img width={46} src="/images/logo.png" alt="logo" />
-          <IconButton
+          {/* <IconButton
             onClick={handleExtendClose}
             className={classes.collapseButton}>
             <ChevronLeftIcon />
-          </IconButton>
+          </IconButton> */}
         </div>
         <Navigation
           data={navigationData}
@@ -230,7 +227,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ navigationData }) => {
         <AppBar
           className={clsx(classes.appBarShift, extended && classes.appBar)}>
           <Toolbar className={classes.toolbar}>
-            <IconButton
+            {/* <IconButton
               edge="start"
               color="inherit"
               aria-label="extend drawer"
@@ -240,7 +237,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ navigationData }) => {
                 extended && classes.extendButtonHidden
               )}>
               <ChevronRightIcon />
-            </IconButton>
+            </IconButton> */}
             <IconButton
               color="inherit"
               aria-label="open drawer"
@@ -256,7 +253,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ navigationData }) => {
             <AvatarPopup />
           </Toolbar>
         </AppBar>
-        <Hidden smUp implementation="css">
+        <Hidden lgUp implementation="css">
           <Drawer
             variant="temporary"
             anchor={"left"}
@@ -274,7 +271,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ navigationData }) => {
             {renderDrawer(true)}
           </Drawer>
         </Hidden>
-        <Hidden smDown implementation="css">
+        <Hidden lgDown implementation="css">
           <Drawer
             variant="permanent"
             classes={{
@@ -301,7 +298,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ navigationData }) => {
               flex: 1,
               display: "flex",
               flexDirection: "column",
-              padding: smUp ? "24px 32px" : "12px 12px",
+              padding: lgUp ? "24px 32px" : "12px 12px",
             }}>
             <Outlet />
           </div>
