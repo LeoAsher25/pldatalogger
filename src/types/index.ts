@@ -11,6 +11,12 @@ export namespace SystemTypes {
     MAX,
   }
 
+  export enum Alerttatus {
+    "Bình thường",
+    "Lo ngại",
+    "Xấu",
+  }
+
   export interface IResponse {
     code?: string;
     message: string;

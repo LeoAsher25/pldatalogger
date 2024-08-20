@@ -233,7 +233,7 @@ export default function FtpHistoryPage() {
               size="large"
               variant="contained"
               loading={false}
-              color="info"
+              color="primary"
               onClick={handleDownload}>
               <CSVLink
                 style={{

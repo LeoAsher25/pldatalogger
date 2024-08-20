@@ -45,7 +45,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const RealtimeDataPage = () => {
+export interface TableDataProps {
+  columns: any[];
+  dataSource: any[];
+}
+
+const TableData = () => {
   useSettingHeader({ pageTitle: "Số liệu tức thời", breadcrumbs: [] });
 
   const currentTime = moment(Date.now()).format("DD-MM-YYYY HH:mm:ss");
@@ -115,4 +120,4 @@ const RealtimeDataPage = () => {
   );
 };
 
-export default RealtimeDataPage;
+export default TableData;

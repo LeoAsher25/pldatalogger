@@ -12,7 +12,6 @@ import clsx from "clsx";
 import React, { Fragment, useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 
-import { Theme } from "@material-ui/core";
 import { makeStyles } from "@mui/styles";
 import Navigation from "src/components/Navigation/Navigation";
 import Page from "src/components/Page";
@@ -22,7 +21,7 @@ import useResponsive from "src/hooks/useResponsive";
 import { RootState } from "src/redux/rootReducer";
 
 const drawerWidth = 280;
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles((theme: any) => ({
   root: {
     display: "flex",
     height: "100vh",

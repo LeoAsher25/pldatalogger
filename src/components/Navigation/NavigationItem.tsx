@@ -11,12 +11,11 @@ import {
 import clsx from "clsx";
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-// import { makeStyles } from "@mui/material/styles";
-import { Theme } from "@material-ui/core";
+import { Theme } from "@mui/material/styles";
 import { makeStyles } from "@mui/styles";
 import { SystemUI } from "src/types";
 
-const useStyles: any = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     width: "95%",
     margin: "4px auto",
@@ -61,16 +60,16 @@ const useStyles: any = makeStyles((theme: Theme) => ({
     // backgroundColor: lighten(theme.palette.secondary.main, 0.1),
   },
   selectedBg: {
-    backgroundColor: `${lighten(theme.palette.success.light, 0.8)} !important`,
+    backgroundColor: `${lighten(theme.palette.primary.main, 0.9)} !important`,
+    // backgroundColor: `${lighten(theme.palette.success.main, 0.8)} !important`,
   },
-
   selectedText: {
-    color: theme.palette.success.main,
+    color: theme.palette.primary.main,
     fontWeight: "500 !important",
     transition: "0.3s",
 
     "& > span": {
-      color: theme.palette.success.main,
+      color: theme.palette.primary.main,
       fontWeight: "500 !important",
       transition: "0.3s",
     },
@@ -79,7 +78,6 @@ const useStyles: any = makeStyles((theme: Theme) => ({
 
 const NavigationItem = ({ item, collapsed }: SystemUI.NavItemProps) => {
   const { pathname } = useLocation();
-
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
@@ -93,7 +91,7 @@ const NavigationItem = ({ item, collapsed }: SystemUI.NavItemProps) => {
     if (
       pathname.includes(item.url) &&
       item.children &&
-      item.children?.length > 0
+      item.children.length > 0
     ) {
       setOpen(true);
     }

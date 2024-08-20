@@ -182,7 +182,6 @@ export default function ConnectionsPage() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {String(isLoading)}
                   {dataFiltered
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((connection: any, index: number) => (

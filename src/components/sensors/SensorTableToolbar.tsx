@@ -36,7 +36,7 @@ export default function SensorTableToolbar({
         justifyContent="flex-end"
         alignItems="center"
         spacing={2}>
-        <Button variant="outlined" onClick={onAdd}>
+        <Button variant="outlined" color="primary" onClick={onAdd}>
           Thêm
         </Button>
       </Stack>
